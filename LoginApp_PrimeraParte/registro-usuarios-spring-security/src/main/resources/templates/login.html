@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Inicio de sesión</title>
+  <link rel="stylesheet" th:href="@{/css/panda.css}" />
+</head>
+
+<body>
+  <br>
+  <br>
+  <br>
+  <div class="panda">
+    <div class="ear"></div>
+    <div class="face">
+      <div class="eye-shade"></div>
+      <div class="eye-white">
+        <div class="eye-ball"></div>
+      </div>
+      <div class="eye-shade rgt"></div>
+      <div class="eye-white rgt">
+        <div class="eye-ball"></div>
+      </div>
+      <div class="nose"></div>
+      <div class="mouth"></div>
+    </div>
+    <div class="body"></div>
+    <div class="foot">
+      <div class="finger"></div>
+    </div>
+    <div class="foot rgt">
+      <div class="finger"></div>
+    </div>
+  </div>
+  <form th:action="@{/login}" method="post">
+    <div class="hand"></div>
+    <div class="hand rgt"></div>
+    <h2>Inicio de sesion</h2>
+    <div class="form-group">
+      <input required="required" class="form-control" id="username" name="username" type="text" />
+      <label class="form-label">Nombre de usuario</label>
+    </div>
+    <div class="form-group">
+      <input id="password" type="password" name="password" required="required" class="form-control" />
+      <label class="form-label">Contraceña</label>
+      <p class="alert">Invalid Credentials..!!</p>
+      <input class="btn" type="submit" name="login-submit" id="login-submit" value="Iniciar sesión"></input>
+    </div>
+  </form>
+
+  <div class="form-group">
+    <span>Si eres nuevo usuario <a th:href="@{/registro}">regístrate aqui</a></span>
+  </div>
+
+  <script>
+    const password = document.querySelector("#password");
+    const form = document.querySelector("form");
+
+    password.addEventListener("focusin", () => {
+      form.classList.add("up");
+    });
+
+    password.addEventListener("focusout", () => {
+      form.classList.remove("up");
+    });
+
+    document.addEventListener("mousemove", (event) => {
+      const dw = document.documentElement.clientWidth / 15;
+      const dh = document.documentElement.clientHeight / 15;
+
+      const x = event.pageX / dw;
+      const y = event.pageY / dh;
+
+      document.querySelectorAll(".eye-ball").forEach((eye) => {
+        eye.style.width = x + "px";
+        eye.style.height = y + "px";
+      });
+    });
+
+    document.querySelectorAll(".btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        form.classList.add("wrong-entry");
+
+        setTimeout(() => {
+          form.classList.remove("wrong-entry");
+        }, 3000);
+      });
+    });
+
+
+  </script>
+</body>
+</html>

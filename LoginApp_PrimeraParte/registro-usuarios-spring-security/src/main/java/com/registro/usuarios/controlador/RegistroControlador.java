@@ -29,4 +29,8 @@ public class RegistroControlador {
         return "acerca";
     }
 
+    @GetMapping("/ir-productos")
+    public String verProductos() {
+        return "redirect:/productos";
+    }
 }

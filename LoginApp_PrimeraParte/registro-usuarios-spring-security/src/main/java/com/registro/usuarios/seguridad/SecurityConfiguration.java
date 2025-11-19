@@ -15,16 +15,16 @@ import com.registro.usuarios.servicio.UsuarioServicio;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UsuarioServicio usuarioServicio;
-	
+
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
@@ -32,38 +32,42 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		auth.setPasswordEncoder(passwordEncoder());
 		return auth;
 	}
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider());
 	}
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers(
-             
-				"/registro**",
-				"/js/**",
-				"/css/**",
-				"/img/**").permitAll()
-		.anyRequest().authenticated()
-		.and()
-		.formLogin()         
-		.loginPage("/login")   
-                .defaultSuccessUrl("/index", true) // <-- Redirige aquí si el login es correcto
-		.permitAll()
-		.and()
-		.logout()
-		.invalidateHttpSession(true)
-		.clearAuthentication(true)
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.logoutSuccessUrl("/login?logout")
-		.permitAll();
+		http.authorizeRequests()
+				.antMatchers(
+						"/",
+						"/index",
+						"/acerca",
+						"/registro**",
+						"/js/**",
+						"/css/**",
+						"/img/**",
+						"/h2-console/**")
+				.permitAll()
+				.antMatchers("/productos/**").authenticated() // ESTA LÍNEA DEBE IR ANTES DE anyRequest()
+				.anyRequest().authenticated() // ESTA SIEMPRE VA AL FINAL
+				.and()
+				.formLogin()
+				.loginPage("/login")
+				.defaultSuccessUrl("/index", true)
+				.permitAll()
+				.and()
+				.logout()
+				.invalidateHttpSession(true)
+				.clearAuthentication(true)
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/login?logout")
+				.permitAll();
+
+		// Para H2 Console
+		http.csrf().disable();
+		http.headers().frameOptions().disable();
 	}
 }
-
-
-
-
-
-

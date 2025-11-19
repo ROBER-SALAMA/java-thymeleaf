@@ -9,46 +9,97 @@
     <title>Usuarios</title>
   </head>
 
-  <body>
-    <div layout:fragment="content">
-      <h1>
-        Registro e inicio de sesión con Spring Boot + Spring Security +
-        Thymeleaf + Hibernate + MySQL
-      </h1>
-      <h4>Bienvenido <span sec:authentication="principal.username"></span></h4>
-      <br />
+  <body class="bg-gray-100">
+    <div layout:fragment="content" class="w-full h-full">
+      <div class="max-w-[84rem] mx-4">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Lista de Usuarios</h1>
 
-      <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Email</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="usuario : ${usuarios}">
-            <td th:text="${usuario.id}"></td>
-            <td th:text="${usuario.nombre}"></td>
-            <td th:text="${usuario.apellido}"></td>
-            <td th:text="${usuario.email}"></td>
-            <td>
-              <a
-                th:href="@{'/registro/editar/' + ${usuario.id}}"
-                class="btn btn-success btn-sm"
-                >Editar</a
-              >
-              <a
-                th:href="@{'/registro/eliminar/' + ${usuario.id}}"
-                class="btn btn-danger btn-sm"
-                >Eliminar</a
-              >
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <h4 class="text-lg text-gray-600 mb-6">
+          Bienvenido
+          <span
+            sec:authentication="principal.username"
+            class="font-semibold text-gray-800"
+          ></span>
+        </h4>
+
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="bg-[#978DE3] text-white">
+                <tr>
+                  <th
+                    class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider"
+                  >
+                    ID
+                  </th>
+                  <th
+                    class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider"
+                  >
+                    Nombre
+                  </th>
+                  <th
+                    class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider"
+                  >
+                    Apellido
+                  </th>
+                  <th
+                    class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider"
+                  >
+                    Email
+                  </th>
+                  <th
+                    class="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider"
+                  >
+                    Acciones
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody class="divide-y divide-gray-200">
+                <tr
+                  th:each="usuario : ${usuarios}"
+                  class="hover:bg-gray-50 transition-colors duration-150"
+                >
+                  <td
+                    class="px-6 py-4 text-sm text-gray-900"
+                    th:text="${usuario.id}"
+                  ></td>
+                  <td
+                    class="px-6 py-4 text-sm text-gray-900"
+                    th:text="${usuario.nombre}"
+                  ></td>
+                  <td
+                    class="px-6 py-4 text-sm text-gray-900"
+                    th:text="${usuario.apellido}"
+                  ></td>
+                  <td
+                    class="px-6 py-4 text-sm text-gray-600"
+                    th:text="${usuario.email}"
+                  ></td>
+
+                  <td class="px-6 py-4 text-center">
+                    <div class="flex justify-center gap-2">
+                      <a
+                        th:href="@{'/registro/editar/' + ${usuario.id}}"
+                        class="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors duration-150 text-sm font-medium"
+                      >
+                        Editar
+                      </a>
+
+                      <a
+                        th:href="@{'/registro/eliminar/' + ${usuario.id}}"
+                        class="inline-flex items-center bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors duration-150 text-sm font-medium"
+                      >
+                        Eliminar
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

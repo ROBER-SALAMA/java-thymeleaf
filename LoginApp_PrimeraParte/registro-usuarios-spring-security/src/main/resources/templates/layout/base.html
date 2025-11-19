@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <head>
+    <meta charset="utf-8" />
+    <title th:text="${pageTitle != null ? pageTitle + ' - Mi Sistema' : 'Mi Sistema'}">Mi Sistema</title>
+    
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+  </head>
+  
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h3>Menú Principal</h3>
+      
+      <!-- Mantenimiento -->
+      <button class="dropdown-btn">🛠️ Mantenimiento ▼</button>
+      <div class="dropdown-container">
+        <a th:href="@{/index}">👤 Usuarios</a>
+        <a th:href="@{/clientes}">👥 Clientes</a>
+        <a th:href="@{/proveedores}">🏢 Proveedores</a>
+        <a th:href="@{/roles}">⚙️ Roles</a>
+      </div>
+      
+      <!-- Procesos -->
+      <button class="dropdown-btn2">⚙️ Procesos ▼</button>
+      <div class="dropdown-container2">
+        <a th:href="@{/compras}">🛒 Compras</a>
+        <a th:href="@{/ventas}">💰 Ventas</a>
+        <a th:href="@{/ir-productos}">📦 Productos</a>
+      </div>
+      
+      <a sec:authorize="isAuthenticated()" th:href="@{/logout}">🚪 Cerrar sesión</a>
+      <a th:href="@{/acerca}">ℹ️ Acerca de</a>
+    </div>
+    
+    <!-- Contenido principal -->
+    <div class="main-content container">
+      <!-- Aquí se insertará el contenido de cada página -->
+      <div layout:fragment="content">
+        <p>Contenido por defecto</p>
+      </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"
+    ></script>
+    
+    <script>
+      // Dropdown 1 (Mantenimiento)
+      const dropdowns = document.getElementsByClassName("dropdown-btn");
+      for (let i = 0; i < dropdowns.length; i++) {
+        dropdowns[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          const dropdownContent = this.nextElementSibling;
+          dropdownContent.style.display =
+            dropdownContent.style.display === "block" ? "none" : "block";
+        });
+      }
+      
+      // Dropdown 2 (Procesos)
+      const dropdowns2 = document.getElementsByClassName("dropdown-btn2");
+      for (let i = 0; i < dropdowns2.length; i++) {
+        dropdowns2[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          const dropdownContent = this.nextElementSibling;
+          dropdownContent.style.display =
+            dropdownContent.style.display === "block" ? "none" : "block";
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -15,15 +15,15 @@
     <div layout:fragment="content" class="w-full h-full">
       <div class="max-w-[84rem] mx-4">
         <h1 class="text-3xl font-bold text-gray-800 mb-2">
-          Gestión de Productos
+          Gestión de Veterinarios
         </h1>
 
         <div class="mb-6">
           <a
-            th:href="@{/productos/nuevo}"
+            th:href="@{/veterinarios/nuevo}"
             class="inline-flex items-center bg-[#1B8064] text-white px-4 py-2 rounded-md hover:bg-[#3DBA95] transition-colors duration-150 text-sm font-medium"
           >
-            <i class="bi bi-plus-circle"></i> Nuevo Producto
+            <i class="bi bi-plus-circle"></i> Nuevo Veterinario
           </a>
         </div>
 
@@ -45,28 +45,19 @@
                   <th
                     class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider"
                   >
-                    Descripción
+                    Apellido
                   </th>
                   <th
                     class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider"
                   >
-                    Precio
+                    Correo
                   </th>
                   <th
                     class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider"
                   >
-                    Unidad Medida
+                    Telefono 
                   </th>
-                  <th
-                    class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider"
-                  >
-                    Categoría
-                  </th>
-                  <th
-                    class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider"
-                  >
-                    Stock
-                  </th>
+                  
                   <th
                     class="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider"
                   >
@@ -77,51 +68,45 @@
 
               <tbody class="divide-y divide-gray-200">
                 <tr
-                  th:each="producto : ${productos}"
+                  th:each="veterinario : ${veterinarios}"
                   class="hover:bg-gray-50 transition-colors duration-150"
                 >
                   <td
                     class="px-6 py-4 text-sm text-gray-900"
-                    th:text="${producto.id}"
+                    th:text="${veterinario.id}"
                   ></td>
                   <td
                     class="px-6 py-4 text-sm text-gray-900"
-                    th:text="${producto.nombre}"
+                    th:text="${veterinario.nombre}"
                   ></td>
                   <td
                     class="px-6 py-4 text-sm text-gray-600"
-                    th:text="${producto.descripcion}"
+                    th:text="${veterinario.apellido}"
+                  ></td>
+                 
+                  <td
+                    class="px-6 py-4 text-sm text-gray-900"
+                    th:text="${veterinario.correo}"
                   ></td>
                   <td
                     class="px-6 py-4 text-sm text-gray-900"
-                    th:text="${'$' + #numbers.formatDecimal(producto.precio, 1, 2)}"
+                    th:text="${veterinario.telefono}"
                   ></td>
-                  <td
-                    class="px-6 py-4 text-sm text-gray-900"
-                    th:text="${producto.unidadMedida}"
-                  ></td>
-                  <td
-                    class="px-6 py-4 text-sm text-gray-900"
-                    th:text="${producto.categoria}"
-                  ></td>
-                  <td
-                    class="px-6 py-4 text-sm text-gray-900"
-                    th:text="${producto.stock}"
-                  ></td>
+                 
 
                   <td class="px-6 py-4 text-center">
                     <div class="flex justify-center gap-2">
                       <a
-                        th:href="@{'/productos/editar/' + ${producto.id}}"
+                        th:href="@{'/veterinarios/editar/' + ${veterinario.id}}"
                         class="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors duration-150 text-sm font-medium"
                       >
                        <i class="bi bi-pencil-square"></i>  Editar
                       </a>
 
                       <a
-                        th:href="@{'/productos/eliminar/' + ${producto.id}}"
+                        th:href="@{'/veterinarios/eliminar/' + ${veterinario.id}}"
                         class="inline-flex items-center bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors duration-150 text-sm font-medium"
-                        onclick="return confirm('¿Estás seguro de eliminar este producto?')"
+                        onclick="return confirm('¿Estás seguro de eliminar este Veterinario?')"
                       >
                         <i class="bi bi-trash3-fill"></i> Eliminar
                       </a>
@@ -134,13 +119,13 @@
         </div>
 
         <div
-          th:if="${#lists.isEmpty(productos)}"
+          th:if="${#lists.isEmpty(veterinarios)}"
           class="mt-6 bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative"
           role="alert"
         >
-          <strong class="font-bold">No hay productos registrados.</strong>
+          <strong class="font-bold">No hay veterinarios registrados.</strong>
           <span class="block sm:inline">
-            Haz clic en "Nuevo Producto" para agregar uno.</span
+            Haz clic en "Nuevo veterinario" para agregar uno.</span
           >
         </div>
       </div>

@@ -13,6 +13,8 @@
     </title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   </head>
 
   <body>
@@ -21,26 +23,29 @@
       <h3>Menú Principal</h3>
 
       <!-- Mantenimiento -->
-      <button class="dropdown-btn">🛠️ Mantenimiento ▼</button>
+      <button class="dropdown-btn"><i class="bi bi-tools"></i> ️ Mantenimiento ▼</button>
       <div class="dropdown-container">
-        <a th:href="@{/index}">👤 Usuarios</a>
-        <a th:href="@{/clientes}">👥 Clientes</a>
-        <a th:href="@{/proveedores}">🏢 Proveedores</a>
-        <a th:href="@{/roles}">⚙️ Roles</a>
+        <a th:href="@{/index}"><i class="bi bi-person-fill"></i> Usuarios</a>
+        <a th:href="@{/clientes}"><i class="bi bi-people-fill"></i> Clientes</a>
+        <a th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a>
+        <a th:href="@{/roles}"><i class="bi bi-shield-lock"></i>️ Roles</a>
+        <a th:href="@{/ir-veterinarios}"><i class="bi bi-heart-pulse"></i> Veterinarios</a>
+        <a th:href="@{/ir-mascotas}"><i class="bi bi-paw"></i>  Mascotas</a>
       </div>
 
       <!-- Procesos -->
-      <button class="dropdown-btn2">⚙️ Procesos ▼</button>
+      <button class="dropdown-btn2"><i class="bi bi-gear-fill"></i>️ Procesos ▼</button>
       <div class="dropdown-container2">
-        <a th:href="@{/compras}">🛒 Compras</a>
-        <a th:href="@{/ventas}">💰 Ventas</a>
-        <a th:href="@{/ir-productos}">📦 Productos</a>
+        <a th:href="@{/compras}"><i class="bi bi-cart-plus-fill"></i> Compras</a>
+        <a th:href="@{/ventas}"><i class="bi bi-cash-coin"></i> Ventas</a>
+        <a th:href="@{/ir-productos}"><i class="bi bi-box-fill"></i> Productos</a>
+        <a th:href="@{/ir-servicios}">📦 servicios</a>
       </div>
 
       <a sec:authorize="isAuthenticated()" th:href="@{/logout}"
-        >🚪 Cerrar sesión</a
+        ><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a
       >
-      <a th:href="@{/acerca}">ℹ️ Acerca de</a>
+      <a th:href="@{/acerca}"><i class="bi bi-info-square-fill"></i>️ Acerca de</a>
     </div>
 
     <!-- Contenido principal -->

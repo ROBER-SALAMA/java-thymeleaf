@@ -43,4 +43,14 @@ public class RegistroControlador {
     public String verVeterinarios() {
         return "redirect:/veterinarios";
     }
+    
+    @GetMapping("/ir-clientes")
+    public String verClientes() {
+        return "redirect:/clientes";
+    }
+    
+    @GetMapping("/ir-mascotas")
+    public String verMascotas() {
+        return "redirect:/mascotas";
+    }
 }

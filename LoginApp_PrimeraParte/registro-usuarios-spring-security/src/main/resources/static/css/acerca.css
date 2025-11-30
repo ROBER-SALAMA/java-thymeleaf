@@ -1,0 +1,76 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 30 nov 2025, 12:03:03
+    Author     : jacqu
+*/
+
+body {
+    background-color: #f4f4f9;
+    font-family: "Segoe UI", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 35px;
+    max-width: 450px;
+    width: 100%;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.card img {
+    width: 100%;
+    max-width: 320px;
+    border-radius: 12px;
+    height: auto;
+    object-fit: contain;
+    margin-bottom: 20px;
+}
+
+.card h3 {
+    margin: 8px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.card p {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #666;
+}
+
+.email {
+    font-weight: bold;
+    color: #007bff;
+    margin: 6px 0;
+    font-size: 15px;
+}
+
+.btn-home {
+    margin-top: 25px;
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: .3s;
+    font-size: 16px;
+}
+
+.btn-home:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,41 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 29 nov 2025, 20:24:13
+    Author     : jacqu
+*/
+body {
+    background: #E9E4F0;  /* fallback */
+    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);
+    background: linear-gradient(to right, #E9E4F0, #D3CCE3);
+}
+.register-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.form-control {
+    border-radius: 8px;
+    padding: 10px;
+}
+.btn-custom {
+    background-color: #FF6FA8;   /* Rosado */
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.btn-custom:hover {
+    background-color: #FF3F8B;   
+}
+
+.navbar-custom {
+    background-color: #6A5ACD !important;
+}
+.navbar-brand {
+    color: white !important;
+    font-weight: 500;
+}

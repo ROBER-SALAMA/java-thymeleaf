@@ -62,6 +62,7 @@ public class MascotaServicio {
         mascotaExistente.setEspecie(mascotaDTO.getEspecie());
         mascotaExistente.setRaza(mascotaDTO.getRaza());
         mascotaExistente.setSexo(mascotaDTO.getSexo());
+        mascotaExistente.setImagen(mascotaDTO.getImagen());
         mascotaExistente.setCliente(cliente);
 
         Mascota mascotaActualizada = mascotaRepositorio.save(mascotaExistente);
@@ -81,7 +82,7 @@ public class MascotaServicio {
         dto.setEspecie(mascota.getEspecie());
         dto.setRaza(mascota.getRaza());
         dto.setSexo(mascota.getSexo());
-
+        dto.setImagen(mascota.getImagen());
         dto.setClienteId(mascota.getCliente().getId());
 
         dto.setNombreCliente(
@@ -97,6 +98,7 @@ public class MascotaServicio {
         mascota.setEspecie(dto.getEspecie());
         mascota.setRaza(dto.getRaza());
         mascota.setSexo(dto.getSexo());
+        mascota.setImagen(dto.getImagen());
         return mascota;
     }
 

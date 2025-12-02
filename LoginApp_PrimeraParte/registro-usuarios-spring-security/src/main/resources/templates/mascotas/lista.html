@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html
   xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{layout/base}"
 >
   <head>
     <title>Mascotas</title>
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
   </head>
-
   <body class="bg-gray-100">
     <div layout:fragment="content" class="w-full h-full">
       <div class="max-w-[84rem] mx-4">
@@ -32,6 +32,11 @@
             <table class="w-full">
               <thead class="bg-[#978DE3] text-white">
                 <tr>
+                  <th
+                    class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider"
+                  >
+                    Imagen
+                  </th>
                   <th
                     class="px-6 py-4 text-left text-sm font-semibold uppercase tracking-wider"
                   >
@@ -62,7 +67,6 @@
                   >
                     Cliente
                   </th>
-                  
                   <th
                     class="px-6 py-4 text-center text-sm font-semibold uppercase tracking-wider"
                   >
@@ -76,12 +80,37 @@
                   th:each="mascota : ${mascotas}"
                   class="hover:bg-gray-50 transition-colors duration-150"
                 >
+                  <td class="px-6 py-4">
+                    <div class="h-12 w-12">
+                      <th:block
+                        th:if="${mascota.imagen != null and not #strings.isEmpty(mascota.imagen)}"
+                      >
+                        <img
+                          th:src="${'data:image/jpeg;base64,' + mascota.imagen}"
+                          class="h-12 w-12 object-cover rounded-full border-2 border-[#978DE3] cursor-pointer"
+                          alt="Foto de mascota"
+                          title="Haz clic para ampliar"
+                          onclick="ampliarImagen(this.src)"
+                        />
+                      </th:block>
+                      <th:block
+                        th:unless="${mascota.imagen != null and not #strings.isEmpty(mascota.imagen)}"
+                      >
+                        <div
+                          class="h-12 w-12 rounded-full bg-gray-200 flex items-center justify-center border-2 border-gray-300"
+                        >
+                          <i class="bi bi-camera text-gray-400"></i>
+                        </div>
+                      </th:block>
+                    </div>
+                  </td>
+
                   <td
                     class="px-6 py-4 text-sm text-gray-900"
                     th:text="${mascota.id}"
                   ></td>
                   <td
-                    class="px-6 py-4 text-sm text-gray-900"
+                    class="px-6 py-4 text-sm text-gray-900 font-medium"
                     th:text="${mascota.nombre}"
                   ></td>
                   <td
@@ -92,14 +121,19 @@
                     class="px-6 py-4 text-sm text-gray-600"
                     th:text="${mascota.raza}"
                   ></td>
+                  <td class="px-6 py-4 text-sm text-gray-900">
+                    <span
+                      th:text="${mascota.sexo}"
+                      th:class="${mascota.sexo == 'Macho'} ? 
+                                                   'px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800' : 
+                                                   'px-2 py-1 text-xs font-semibold rounded-full bg-pink-100 text-pink-800'"
+                    >
+                    </span>
+                  </td>
                   <td
                     class="px-6 py-4 text-sm text-gray-900"
-                    th:text="${mascota.sexo}"
+                    th:text="${mascota.nombreCliente}"
                   ></td>
-                 <td class="px-6 py-4 text-sm text-gray-900" 
-                     th:text="${mascota.nombreCliente}"></td>
-
-                  
 
                   <td class="px-6 py-4 text-center">
                     <div class="flex justify-center gap-2">
@@ -107,7 +141,7 @@
                         th:href="@{'/mascotas/editar/' + ${mascota.id}}"
                         class="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors duration-150 text-sm font-medium"
                       >
-                       <i class="bi bi-pencil-square"></i>  Editar
+                        <i class="bi bi-pencil-square"></i> Editar
                       </a>
 
                       <a
@@ -130,10 +164,10 @@
           class="mt-6 bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative"
           role="alert"
         >
-          <strong class="font-bold">No hay Mascotas registrados.</strong>
+          <strong class="font-bold">No hay Mascotas registradas.</strong>
           <span class="block sm:inline">
-            Haz clic en "Nueva Mascota" para agregar uno.</span
-          >
+            Haz clic en "Nueva Mascota" para agregar una.
+          </span>
         </div>
       </div>
     </div>

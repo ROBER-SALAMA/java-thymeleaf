@@ -14,18 +14,21 @@ public class MascotaDTO {
     private String especie;
     private String raza;
     private String sexo;
+    private String imagen;
     private Long clienteId;
     private String nombreCliente;
 
     public MascotaDTO() {
     }
 
-    public MascotaDTO(Long id, String nombre, String especie, String raza, String sexo, Long clienteId, String nombreCliente) {
+    public MascotaDTO(Long id, String nombre, String especie, String raza, String sexo, Long clienteId,
+            String nombreCliente) {
         this.id = id;
         this.nombre = nombre;
         this.especie = especie;
         this.raza = raza;
         this.sexo = sexo;
+        this.imagen = imagen;
         this.clienteId = clienteId;
         this.nombreCliente = nombreCliente;
     }
@@ -66,6 +69,14 @@ public class MascotaDTO {
         return sexo;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
@@ -85,10 +96,5 @@ public class MascotaDTO {
     public void setNombreCliente(String nombreCliente) {
         this.nombreCliente = nombreCliente;
     }
-    
-    
 
-   
-    
-    
 }

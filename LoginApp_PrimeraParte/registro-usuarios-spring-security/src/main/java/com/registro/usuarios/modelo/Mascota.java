@@ -20,26 +20,29 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "mascota")
 public class Mascota {
-    
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long id;
-   
-   @Column(name = "nombre", nullable = false, length = 100)
-   private String nombre;
-   
-   @Column(name = "especie", nullable = false, length = 100)
-   private String especie;
-   
-   @Column(name = "raza", nullable = false, length = 100)
-   private String raza;
-   
-   @Column(name = "sexo", nullable = false, length = 100)
-   private String sexo;
-   
-  // RELACIÓN CON CLIENTE
-   @ManyToOne
-   @JoinColumn(name = "cliente_id") 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "nombre", nullable = false, length = 100)
+    private String nombre;
+
+    @Column(name = "especie", nullable = false, length = 100)
+    private String especie;
+
+    @Column(name = "raza", nullable = false, length = 100)
+    private String raza;
+
+    @Column(name = "sexo", nullable = false, length = 100)
+    private String sexo;
+
+    @Column(name = "imagen", columnDefinition = "LONGTEXT")
+    private String imagen;
+
+    // RELACIÓN CON CLIENTE
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     public Mascota() {
@@ -51,6 +54,7 @@ public class Mascota {
         this.especie = especie;
         this.raza = raza;
         this.sexo = sexo;
+        this.imagen = imagen;
         this.cliente = cliente;
     }
 
@@ -94,6 +98,14 @@ public class Mascota {
         this.sexo = sexo;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
     public Cliente getCliente() {
         return cliente;
     }
@@ -101,6 +113,5 @@ public class Mascota {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-   
-   
+
 }

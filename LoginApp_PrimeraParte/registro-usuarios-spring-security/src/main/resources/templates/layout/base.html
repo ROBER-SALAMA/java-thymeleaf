@@ -20,7 +20,11 @@
   <body>
     <!-- Sidebar -->
     <div class="sidebar">
-      <h3>Menú Principal</h3>
+        
+      <img th:src="@{/imagenes/logo.png}" alt="Foto de perfil"  class="logo-img">
+      <h3 class="menu-titulo">Menú Principal</h3>
+      
+      <a th:href="@{/home}"><i class="bi bi-house-door-fill"></i> Inicio</a>
 
       <!-- Mantenimiento -->
       <button class="dropdown-btn"><i class="bi bi-tools"></i> ️ Mantenimiento ▼</button>

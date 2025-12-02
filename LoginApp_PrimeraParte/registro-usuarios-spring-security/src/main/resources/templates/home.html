@@ -1,15 +1,97 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TU PAPI ROUSSEAU</div>
-    </body>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/base}"
+>
+<head>
+    <title>Dashboard - Veterinaria</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body layout:fragment="content">
+
+<div class="p-6">
+
+    <!-- Título -->
+    <h1 class="text-3xl font-bold mb-6">Dashboard General</h1>
+
+    <!-- === CARDS DE RESUMEN === -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+
+        <div class="p-6 bg-white rounded-2xl shadow">
+            <div class="flex items-center">
+                <i class="bi bi-people text-4xl text-blue-500"></i>
+                <div class="ml-4">
+                    <p class="text-gray-500">Clientes</p>
+                    <h2 class="text-2xl font-bold">120</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 bg-white rounded-2xl shadow">
+            <div class="flex items-center">
+                <i class="bi bi-hearts text-4xl text-red-500"></i>
+                <div class="ml-4">
+                    <p class="text-gray-500">Mascotas</p>
+                    <h2 class="text-2xl font-bold">85</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 bg-white rounded-2xl shadow">
+            <div class="flex items-center">
+                <i class="bi bi-calendar-check text-4xl text-green-500"></i>
+                <div class="ml-4">
+                    <p class="text-gray-500">Citas Hoy</p>
+                    <h2 class="text-2xl font-bold">12</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 bg-white rounded-2xl shadow">
+            <div class="flex items-center">
+                <i class="bi bi-capsule text-4xl text-purple-500"></i>
+                <div class="ml-4">
+                    <p class="text-gray-500">Vacunas Pendientes</p>
+                    <h2 class="text-2xl font-bold">23</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- === GRAFICO === -->
+    <div class="bg-white p-6 rounded-2xl shadow mb-8">
+        <h2 class="text-xl font-bold mb-4">Citas por Mes</h2>
+        <canvas id="citasChart" height="120"></canvas>
+    </div>
+
+   
+
+</div>
+
+<script>
+    // Chart.js ejemplo (puedes reemplazar con datos reales)
+    const ctx = document.getElementById('citasChart');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+            datasets: [{
+                label: 'Citas',
+                data: [12, 19, 15, 22, 30, 28, 32, 25, 20, 18, 24, 29],
+                borderWidth: 2,
+                fill: false
+            }]
+        }
+    });
+</script>
+
+</body>
 </html>

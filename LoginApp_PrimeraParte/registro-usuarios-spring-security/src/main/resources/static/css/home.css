@@ -1,0 +1,149 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 2 dic 2025, 13:29:57
+    Author     : jacqu
+*/
+
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 30 nov 2025, 12:52:41
+    Author     : jacqu
+*/
+
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 29 nov 2025, 18:47:26
+    Author     : jacqu
+*/
+/* Contenido principal */
+.main-content {
+    margin-left: 260px; /* debe ser igual o un poco más del ancho del sidebar */
+    padding: 30px;
+}
+
+/* ====== Paleta base  ====== */
+body {
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* ====== Tarjetas del dashboard ====== */
+.card {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.bg-primary {
+    background-color: #4a90e2 !important;
+    color: white;
+}
+
+.bg-success {
+    background-color: #50c878 !important;
+    color: white;
+}
+
+.bg-secondary {
+    background-color: #6c757d !important;
+    color: white;
+}
+
+/* ====== Tabla de citas ====== */
+.table {
+    font-size: 14px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead {
+    background-color: #e9ecef;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+/* Etiquetas de estado */
+.badge {
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
+.badge-success {
+    background-color: #28a745;
+}
+
+.badge-warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+    .card h2 {
+        font-size: 1.5rem;
+    }
+
+    .table {
+        font-size: 12px;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+}
+
+/* ====== Animación suave ====== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+/* ====== Modo oscuro opcional ====== */
+body.dark-mode {
+    background-color: #1e1e2f;
+    color: #f0f0f0;
+}
+
+.dark-mode .card {
+    background-color: #2c2c3c;
+    color: #f0f0f0;
+}
+
+.dark-mode .table {
+    background-color: #2c2c3c;
+    color: #f0f0f0;
+}

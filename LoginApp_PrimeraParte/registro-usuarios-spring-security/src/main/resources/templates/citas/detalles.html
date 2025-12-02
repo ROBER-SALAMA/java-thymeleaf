@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Detalles de Cita</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body class="bg-gray-100">
+    <div layout:fragment="content">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6">Detalles de la Cita</h1>
+
+            <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+                <!-- Encabezado -->
+                <div class="bg-[#978DE3] text-white p-6">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h2 class="text-2xl font-bold">Cita #<span th:text="${cita.id}"></span></h2>
+                            <p class="text-[#E0DDFF]">Información completa de la cita programada</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="inline-block px-3 py-1 rounded-full text-sm font-semibold"
+                                  th:classappend="${cita.aceptaTerminos} ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+                                <span th:text="${cita.aceptaTerminos} ? 'Términos Aceptados' : 'Términos No Aceptados'"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contenido -->
+                <div class="p-8 space-y-8">
+                    <!-- Información básica -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4 pb-2 border-b border-gray-200">
+                            Información Básica
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Correo Electrónico</p>
+                                    <p class="mt-1 text-lg text-gray-900" th:text="${cita.correoElectronico}"></p>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Mascota</p>
+                                    <p class="mt-1 text-lg text-gray-900" th:text="${cita.mascota.nombre}"></p>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Servicio</p>
+                                    <p class="mt-1 text-lg text-gray-900" th:text="${cita.servicio.nombre}"></p>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Fecha Preferida</p>
+                                    <p class="mt-1 text-lg text-gray-900" th:text="${cita.fechaPreferida}"></p>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Hora Preferida</p>
+                                    <p class="mt-1 text-lg text-gray-900" th:text="${cita.horaPreferida}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información médica -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4 pb-2 border-b border-gray-200">
+                            Información Médica
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Alergias Conocidas -->
+                            <div class="bg-gray-50 p-5 rounded-lg">
+                                <p class="text-sm font-medium text-gray-700 mb-3">Alergias Conocidas</p>
+                                <div class="min-h-[100px]">
+                                    <p th:if="${cita.alergiasConocidas != null && !cita.alergiasConocidas.isEmpty()}" 
+                                       class="text-gray-800" th:text="${cita.alergiasConocidas}"></p>
+                                    <p th:unless="${cita.alergiasConocidas != null && !cita.alergiasConocidas.isEmpty()}" 
+                                       class="text-gray-500 italic">No se registraron alergias</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Patologías/Condiciones -->
+                            <div class="bg-gray-50 p-5 rounded-lg">
+                                <p class="text-sm font-medium text-gray-700 mb-3">Patologías/Condiciones Médicas</p>
+                                <div class="min-h-[100px]">
+                                    <p th:if="${cita.patologiasCondiciones != null && !cita.patologiasCondiciones.isEmpty()}" 
+                                       class="text-gray-800" th:text="${cita.patologiasCondiciones}"></p>
+                                    <p th:unless="${cita.patologiasCondiciones != null && !cita.patologiasCondiciones.isEmpty()}" 
+                                       class="text-gray-500 italic">No se registraron patologías</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instrucciones o Notas Especiales -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4 pb-2 border-b border-gray-200">
+                            Instrucciones o Notas Especiales
+                        </h3>
+                        <div class="bg-gray-50 p-5 rounded-lg">
+                            <p th:if="${cita.instruccionesNotas != null && !cita.instruccionesNotas.isEmpty()}" 
+                               class="text-gray-800 whitespace-pre-line" th:text="${cita.instruccionesNotas}"></p>
+                            <p th:unless="${cita.instruccionesNotas != null && !cita.instruccionesNotas.isEmpty()}" 
+                               class="text-gray-500 italic">No hay instrucciones especiales registradas</p>
+                        </div>
+                    </div>
+
+                    <!-- Información de la Mascota -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-700 mb-4 pb-2 border-b border-gray-200">
+                            Información de la Mascota
+                        </h3>
+                        <div class="bg-blue-50 border border-blue-100 rounded-lg p-6">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                <div>
+                                    <p class="text-sm font-medium text-blue-600">Nombre</p>
+                                    <p class="mt-1 text-lg font-semibold text-gray-900" th:text="${cita.mascota.nombre}"></p>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-blue-600">Especie</p>
+                                    <p class="mt-1 text-lg font-semibold text-gray-900" th:text="${cita.mascota.especie}"></p>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-blue-600">Raza</p>
+                                    <p class="mt-1 text-lg font-semibold text-gray-900" th:text="${cita.mascota.raza}"></p>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-blue-600">Sexo</p>
+                                    <p class="mt-1 text-lg font-semibold text-gray-900" th:text="${cita.mascota.sexo}"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <div class="flex justify-between pt-6 border-t border-gray-200">
+                        <div class="space-x-4">
+                            <a th:href="@{/citas}" 
+                               class="inline-flex items-center px-5 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                                <i class="bi bi-arrow-left mr-2"></i> Volver a la lista
+                            </a>
+                            <a th:href="@{'/citas/editar/' + ${cita.id}}" 
+                               class="inline-flex items-center px-5 py-3 border border-transparent rounded-lg text-sm font-medium text-white bg-[#1B8064] hover:bg-[#3DBA95] transition-colors">
+                                <i class="bi bi-pencil-square mr-2"></i> Editar Cita
+                            </a>
+                        </div>
+                        <div>
+                            <a th:href="@{/citas}" 
+                               class="inline-flex items-center px-5 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                                <i class="bi bi-list-ul mr-2"></i> Ver todas las citas
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

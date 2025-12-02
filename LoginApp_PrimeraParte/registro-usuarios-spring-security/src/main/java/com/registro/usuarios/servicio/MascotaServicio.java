@@ -85,8 +85,7 @@ public class MascotaServicio {
         dto.setClienteId(mascota.getCliente().getId());
 
         dto.setNombreCliente(
-                mascota.getCliente().getNombre() + " " + mascota.getCliente().getApellido()
-        );
+                mascota.getCliente().getNombre() + " " + mascota.getCliente().getApellido());
 
         return dto;
     }
@@ -99,5 +98,9 @@ public class MascotaServicio {
         mascota.setRaza(dto.getRaza());
         mascota.setSexo(dto.getSexo());
         return mascota;
+    }
+
+    public List<Mascota> obtenerTodasMascotas() {
+        return mascotaRepositorio.findAll();
     }
 }

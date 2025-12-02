@@ -33,24 +33,29 @@ public class RegistroControlador {
     public String verProductos() {
         return "redirect:/productos";
     }
-    
+
     @GetMapping("/ir-servicios")
     public String verServicios() {
         return "redirect:/servicios";
     }
-    
+
     @GetMapping("/ir-veterinarios")
     public String verVeterinarios() {
         return "redirect:/veterinarios";
     }
-    
+
     @GetMapping("/ir-clientes")
     public String verClientes() {
         return "redirect:/clientes";
     }
-    
+
     @GetMapping("/ir-mascotas")
     public String verMascotas() {
         return "redirect:/mascotas";
+    }
+
+    @GetMapping("/ir-citas")
+    public String verCitas() {
+        return "redirect:/citas";
     }
 }

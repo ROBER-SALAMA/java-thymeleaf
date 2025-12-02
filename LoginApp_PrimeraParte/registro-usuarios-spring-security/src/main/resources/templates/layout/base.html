@@ -30,7 +30,6 @@
         <a th:href="@{/proveedores}"><i class="bi bi-truck"></i> Proveedores</a>
         <a th:href="@{/roles}"><i class="bi bi-shield-lock"></i>️ Roles</a>
         <a th:href="@{/ir-veterinarios}"><i class="bi bi-heart-pulse"></i> Veterinarios</a>
-        <a th:href="@{/ir-mascotas}"><i class="bi bi-paw"></i>  Mascotas</a>
       </div>
 
       <!-- Procesos -->
@@ -39,8 +38,9 @@
         <a th:href="@{/compras}"><i class="bi bi-cart-plus-fill"></i> Compras</a>
         <a th:href="@{/ventas}"><i class="bi bi-cash-coin"></i> Ventas</a>
         <a th:href="@{/ir-productos}"><i class="bi bi-box-fill"></i> Productos</a>
-        <a th:href="@{/ir-servicios}">📦 servicios</a>
-        <a th:href="@{/ir-citas}">📦 Citas</a>
+        <a th:href="@{/ir-servicios}"><i class="bi bi-box"></i> servicios</a>
+        <a th:href="@{/ir-citas}"><i class="bi bi-book"></i> Citas</a>
+        <a th:href="@{/ir-mascotas}"><i class="bi bi-postcard-heart-fill"></i> Mascotas</a>
       </div>
 
       <a sec:authorize="isAuthenticated()" th:href="@{/logout}"

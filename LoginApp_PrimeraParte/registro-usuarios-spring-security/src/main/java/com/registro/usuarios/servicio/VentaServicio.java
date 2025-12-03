@@ -138,7 +138,7 @@ public class VentaServicio {
                 double precio = ((Number) producto.get("precio")).doubleValue();
                 int cantidad = ((Number) producto.get("cantidad")).intValue();
                 double subtotalProducto = precio * cantidad;
-                double ivaProducto = subtotalProducto * 0.16;
+                double ivaProducto = subtotalProducto * 0.13;
 
                 producto.put("subtotal", subtotalProducto);
                 producto.put("iva", ivaProducto);

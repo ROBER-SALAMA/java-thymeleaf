@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Nueva Venta</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="max-w-6xl mx-auto p-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6">Nueva Venta</h1>
+            
+            <form id="ventaForm" th:action="@{/ventas/guardar}" method="post">
+                <!-- Información del cliente -->
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <h2 class="text-xl font-semibold mb-4">Información del Cliente</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Nombre *</label>
+                            <input type="text" name="clienteNombre" required 
+                                   class="w-full border rounded-lg px-3 py-2">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Email</label>
+                            <input type="email" name="clienteEmail" 
+                                   class="w-full border rounded-lg px-3 py-2">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Teléfono</label>
+                            <input type="text" name="clienteTelefono" 
+                                   class="w-full border rounded-lg px-3 py-2">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Método de pago y observaciones -->
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Método de Pago *</label>
+                            <select name="metodoPago" required 
+                                    class="w-full border rounded-lg px-3 py-2">
+                                <option value="">Seleccionar...</option>
+                                <option th:each="metodo : ${metodosPago}" 
+                                        th:value="${metodo}" 
+                                        th:text="${metodo}"></option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Observaciones</label>
+                            <textarea name="observaciones" rows="3" 
+                                      class="w-full border rounded-lg px-3 py-2"></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Productos -->
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold">Productos</h2>
+                        <button type="button" onclick="agregarProducto()" 
+                                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            <i class="bi bi-plus"></i> Agregar Producto
+                        </button>
+                    </div>
+                    
+                    <div id="productosContainer">
+                        <!-- Los productos se agregarán dinámicamente aquí -->
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-sm text-gray-600">Productos agregados: <span id="contadorProductos">0</span></p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-lg font-semibold">Total: $<span id="totalVenta">0.00</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Productos en JSON oculto -->
+                <input type="hidden" name="productos" id="productosJson" value="[]">
+                
+                <!-- Botones -->
+                <div class="flex justify-end space-x-4">
+                    <a th:href="@{/ventas}" class="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50">
+                        Cancelar
+                    </a>
+                    <button type="submit" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                        Guardar Venta
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- JavaScript para manejar productos dinámicamente -->
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            let productosSeleccionados = [];
+            let contadorProductos = 0;
+            
+            // Obtener lista de productos desde Thymeleaf
+            const productosDisponibles = /*[[${listaProductos}]]*/ [];
+            
+            function agregarProducto() {
+                contadorProductos++;
+                const container = document.getElementById('productosContainer');
+                
+                const productoHTML = `
+                    <div class="border rounded-lg p-4 mb-4 producto-item" id="producto-${contadorProductos}">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="font-medium text-gray-700">Producto #${contadorProductos}</h3>
+                            <button type="button" onclick="eliminarProducto(${contadorProductos})" 
+                                    class="text-red-600 hover:text-red-800">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Producto *</label>
+                                <select class="producto-select w-full border rounded-lg px-3 py-2" 
+                                        onchange="cambiarProducto(${contadorProductos})" required>
+                                    <option value="">Seleccionar producto...</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Precio Unitario</label>
+                                <input type="number" step="0.01" 
+                                       class="precio-input w-full border rounded-lg px-3 py-2 bg-gray-50" 
+                                       readonly>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Cantidad *</label>
+                                <input type="number" min="1" value="1" 
+                                       class="cantidad-input w-full border rounded-lg px-3 py-2" 
+                                       onchange="actualizarProducto(${contadorProductos})" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Subtotal</label>
+                                <input type="text" 
+                                       class="subtotal-input w-full border rounded-lg px-3 py-2 bg-gray-50" 
+                                       value="$0.00" readonly>
+                            </div>
+                        </div>
+                        
+                        <input type="hidden" class="producto-id">
+                        <input type="hidden" class="producto-nombre">
+                        <input type="hidden" class="producto-descripcion">
+                        <input type="hidden" class="producto-unidad-medida">
+                    </div>
+                `;
+                
+                container.insertAdjacentHTML('beforeend', productoHTML);
+                
+                // Llenar el select con productos disponibles
+                const select = document.querySelector(`#producto-${contadorProductos} .producto-select`);
+                productosDisponibles.forEach(producto => {
+                    const option = document.createElement('option');
+                    option.value = producto.id;
+                    option.textContent = producto.nombre + ' - $' + producto.precio.toFixed(2);
+                    option.dataset.precio = producto.precio;
+                    option.dataset.descripcion = producto.descripcion || '';
+                    option.dataset.unidadMedida = producto.unidadMedida || '';
+                    select.appendChild(option);
+                });
+                
+                actualizarContador();
+            }
+            
+            function cambiarProducto(id) {
+                const select = document.querySelector(`#producto-${id} .producto-select`);
+                const precioInput = document.querySelector(`#producto-${id} .precio-input`);
+                const productoIdInput = document.querySelector(`#producto-${id} .producto-id`);
+                const productoNombreInput = document.querySelector(`#producto-${id} .producto-nombre`);
+                const productoDescripcionInput = document.querySelector(`#producto-${id} .producto-descripcion`);
+                const productoUnidadMedidaInput = document.querySelector(`#producto-${id} .producto-unidad-medida`);
+                
+                const selectedOption = select.options[select.selectedIndex];
+                
+                if (select.value) {
+                    precioInput.value = selectedOption.dataset.precio || '0';
+                    productoIdInput.value = select.value;
+                    productoNombreInput.value = selectedOption.text.split(' - $')[0];
+                    productoDescripcionInput.value = selectedOption.dataset.descripcion || '';
+                    productoUnidadMedidaInput.value = selectedOption.dataset.unidadMedida || '';
+                } else {
+                    precioInput.value = '0';
+                    productoIdInput.value = '';
+                    productoNombreInput.value = '';
+                    productoDescripcionInput.value = '';
+                    productoUnidadMedidaInput.value = '';
+                }
+                
+                actualizarProducto(id);
+            }
+            
+            function actualizarProducto(id) {
+                const precio = parseFloat(document.querySelector(`#producto-${id} .precio-input`).value) || 0;
+                const cantidad = parseInt(document.querySelector(`#producto-${id} .cantidad-input`).value) || 0;
+                const subtotal = precio * cantidad;
+                
+                document.querySelector(`#producto-${id} .subtotal-input`).value = '$' + subtotal.toFixed(2);
+                actualizarTotales();
+            }
+            
+            function eliminarProducto(id) {
+                document.getElementById(`producto-${id}`).remove();
+                actualizarTotales();
+                actualizarContador();
+            }
+            
+            function actualizarTotales() {
+                productosSeleccionados = [];
+                let total = 0;
+                let productoCount = 0;
+                
+                document.querySelectorAll('.producto-item').forEach(item => {
+                    const productoId = item.querySelector('.producto-id').value;
+                    const productoNombre = item.querySelector('.producto-nombre').value;
+                    const productoDescripcion = item.querySelector('.producto-descripcion').value;
+                    const productoUnidadMedida = item.querySelector('.producto-unidad-medida').value;
+                    const precio = parseFloat(item.querySelector('.precio-input').value) || 0;
+                    const cantidad = parseInt(item.querySelector('.cantidad-input').value) || 0;
+                    
+                    if (productoId && precio > 0 && cantidad > 0) {
+                        const subtotal = precio * cantidad;
+                        total += subtotal;
+                        productoCount++;
+                        
+                        productosSeleccionados.push({
+                            productoId: parseInt(productoId),
+                            productoNombre: productoNombre,
+                            descripcion: productoDescripcion,
+                            precio: precio,
+                            cantidad: cantidad,
+                            subtotal: subtotal,
+                            unidadMedida: productoUnidadMedida
+                        });
+                    }
+                });
+                
+                document.getElementById('totalVenta').textContent = total.toFixed(2);
+                document.getElementById('productosJson').value = JSON.stringify(productosSeleccionados);
+                document.getElementById('contadorProductos').textContent = productoCount;
+            }
+            
+            function actualizarContador() {
+                const count = document.querySelectorAll('.producto-item').length;
+                document.getElementById('contadorProductos').textContent = count;
+            }
+            
+            // Validar formulario antes de enviar
+            document.getElementById('ventaForm').addEventListener('submit', function(event) {
+                if (productosSeleccionados.length === 0) {
+                    event.preventDefault();
+                    alert('Debe agregar al menos un producto a la venta');
+                    return false;
+                }
+                
+                const clienteNombre = document.querySelector('input[name="clienteNombre"]').value;
+                const metodoPago = document.querySelector('select[name="metodoPago"]').value;
+                
+                if (!clienteNombre || !metodoPago) {
+                    event.preventDefault();
+                    alert('Complete todos los campos obligatorios (*)');
+                    return false;
+                }
+            });
+            
+            // Agregar un producto al cargar la página
+            document.addEventListener('DOMContentLoaded', function() {
+                agregarProducto();
+            });
+            /*]]>*/
+        </script>
+    </div>
+</body>
+</html>

@@ -58,9 +58,15 @@ public class RegistroControlador {
     public String verCitas() {
         return "redirect:/citas";
     }
-    
+
     @GetMapping("/home")
     public String home() {
         return "home";
     }
+
+    @GetMapping("/ir-ventas")
+    public String verVentas() {
+        return "redirect:/ventas";
+    }
+
 }

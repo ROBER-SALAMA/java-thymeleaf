@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Detalles de Venta</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+<body class="bg-gray-100">
+    <div layout:fragment="content">
+        <div class="max-w-6xl mx-auto p-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6">Detalles de Venta #<span th:text="${venta.id}"></span></h1>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+                    <div class="bg-[#978DE3] text-white p-6">
+                        <h2 class="text-xl font-bold">Información de la Venta</h2>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">ID Venta</p>
+                                <p class="text-lg font-semibold text-gray-800" th:text="${venta.id}"></p>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Estado</p>
+                                <span th:text="${venta.activo} ? 'ACTIVA' : 'INACTIVA'"
+                                      th:class="${venta.activo} ? 
+                                               'px-3 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-800' :
+                                               'px-3 py-1 text-sm font-semibold rounded-full bg-red-100 text-red-800'">
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t pt-4">
+                            <h3 class="text-lg font-semibold text-gray-700 mb-3">Datos extraídos del JSON</h3>
+                            <div id="ventaDatos" class="space-y-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JSON completo -->
+                <div class="bg-white shadow-xl rounded-lg overflow-hidden">
+                    <div class="bg-gray-800 text-white p-6">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-xl font-bold">JSON Completo</h2>
+                            <button onclick="copiarJSON()" 
+                                    class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm">
+                                <i class="bi bi-clipboard mr-2"></i> Copiar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-6 bg-gray-900">
+                        <pre id="jsonContainer" class="text-sm text-gray-300 overflow-auto max-h-[500px] whitespace-pre-wrap">
+                            <code th:text="${jsonFormateado}"></code>
+                        </pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="mt-6 flex justify-between">
+                <a th:href="@{/ventas}" 
+                   class="inline-flex items-center px-5 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                    <i class="bi bi-arrow-left mr-2"></i> Volver a la lista
+                </a>
+                
+                <div class="space-x-4">
+                    
+                    <a th:if="${venta.activo}"
+                       th:href="@{'/ventas/eliminar/' + ${venta.id}}"
+                       class="inline-flex items-center px-5 py-3 border border-transparent rounded-lg text-sm font-medium text-white bg-red-600 hover:bg-red-700"
+                       onclick="return confirm('¿Estás seguro de eliminar esta venta?')">
+                        <i class="bi bi-trash mr-2"></i> Eliminar Venta
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                const jsonVenta = /*[[${venta.jsonVenta}]]*/ '{}';
+                const datos = JSON.parse(jsonVenta);
+                const container = document.getElementById('ventaDatos');
+                
+                // Función para crear fila de datos
+                function crearFila(label, valor) {
+                    if (valor === undefined || valor === null) return '';
+                    return `
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="col-span-1">
+                                <p class="text-sm font-medium text-gray-500">${label}</p>
+                            </div>
+                            <div class="col-span-2">
+                                <p class="text-sm text-gray-800">${valor}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Información del cliente
+                let html = '<div class="bg-gray-50 p-4 rounded-lg mb-4">';
+                html += '<h4 class="font-semibold text-gray-700 mb-2">Información del Cliente</h4>';
+                html += crearFila('Nombre', datos.clienteNombre);
+                html += crearFila('Email', datos.clienteEmail);
+                html += crearFila('Teléfono', datos.clienteTelefono);
+                html += '</div>';
+                
+                // Información de la venta
+                html += '<div class="bg-gray-50 p-4 rounded-lg mb-4">';
+                html += '<h4 class="font-semibold text-gray-700 mb-2">Detalles de la Venta</h4>';
+                html += crearFila('Fecha', datos.fecha);
+                html += crearFila('Método de Pago', datos.metodoPago);
+                html += crearFila('Observaciones', datos.observaciones);
+                html += '</div>';
+                
+                // Totales
+                html += '<div class="bg-blue-50 p-4 rounded-lg mb-4">';
+                html += '<h4 class="font-semibold text-blue-700 mb-2">Totales</h4>';
+                html += crearFila('Subtotal', datos.subtotal ? '$' + datos.subtotal : '');
+                html += crearFila('IVA (16%)', datos.iva ? '$' + datos.iva : '');
+                html += crearFila('<strong>Total</strong>', datos.total ? '<strong>$' + datos.total + '</strong>' : '');
+                html += '</div>';
+                
+                // Productos
+                if (datos.productos && Array.isArray(datos.productos)) {
+                    html += '<div class="bg-green-50 p-4 rounded-lg">';
+                    html += '<h4 class="font-semibold text-green-700 mb-2">Productos (' + datos.productos.length + ')</h4>';
+                    
+                    datos.productos.forEach((producto, index) => {
+                        html += `
+                            <div class="border-l-4 border-green-500 pl-3 mb-3">
+                                <p class="font-medium text-gray-800">${producto.productoNombre}</p>
+                                <div class="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                                    <span>${producto.cantidad} x $${producto.precio}</span>
+                                    <span class="text-right">Total: $${producto.total}</span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += '</div>';
+                }
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error al parsear JSON:', error);
+                document.getElementById('ventaDatos').innerHTML = `
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <p class="text-red-700">Error al procesar los datos de la venta.</p>
+                    </div>
+                `;
+            }
+        });
+        
+        function copiarJSON() {
+            const jsonText = document.querySelector('#jsonContainer code').textContent;
+            navigator.clipboard.writeText(jsonText).then(() => {
+                alert('JSON copiado al portapapeles');
+            });
+        }
+        /*]]>*/
+    </script>
+
+    <!-- Estilos adicionales -->
+    <style>
+        pre {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            line-height: 1.5;
+        }
+        .border-l-4 {
+            border-left-width: 4px;
+        }
+    </style>
+</body>
+</html>
